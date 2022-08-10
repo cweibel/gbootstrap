@@ -9,10 +9,10 @@ set -x
 
 psql "postgres://${master_username}:${master_password}@${host}/postgres"                 -c "CREATE USER ${concourse_username} WITH CREATEDB CREATEROLE PASSWORD '${concourse_password}';"
 
-psql "postgres://${concourse_username}:${concourse_password}@${host}/postgres"           -c "CREATE DATABASE ats;"
+psql "postgres://${concourse_username}:${concourse_password}@${host}/postgres"           -c "CREATE DATABASE atc;"
 
-psql "postgres://${master_username}:${master_password}@${host}/ats"                      -c "CREATE EXTENSION IF NOT EXISTS citext;"
+psql "postgres://${master_username}:${master_password}@${host}/atc"                      -c "CREATE EXTENSION IF NOT EXISTS citext;"
 
-psql "postgres://${master_username}:${master_password}@${host}/ats"                      -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
+psql "postgres://${master_username}:${master_password}@${host}/atc"                      -c "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
   
-psql "postgres://${concourse_username}:${concourse_password}@${host}/ats"                -c "SELECT 1;"
+psql "postgres://${concourse_username}:${concourse_password}@${host}/atc"                -c "SELECT 1;"

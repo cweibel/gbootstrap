@@ -53,6 +53,7 @@ output "blacksmith_alb_dns_name"     {value = coalesce(one(module.blacksmith-lb[
 output "cf_ssh_nlb_dns_name"         {value = coalesce(one(module.cf-ssh-lb[*].dns_name),          "none")}
 output "cf_tcp_elb_dns_name"         {value = coalesce(one(module.cf-tcp-lb[*].dns_name),          "none")}
 output "cf_system_app_alb_dns_name"  {value = coalesce(one(module.cf-system-apps-lb[*].dns_name),  "none")}
+output "shield_app_alb_dns_name"     {value = coalesce(one(module.shield-lb[*].dns_name),  "none")}
 
 
 output "concourse_alb_name"          {value = coalesce(one(module.concourse-lb[*].lb_name),        "none")}
@@ -64,8 +65,37 @@ output "cf_system_app_alb_name"      {value = coalesce(one(module.cf-system-apps
 
 output "ssh_to_bastion" {value = "ssh -i ${var.aws_key_file} ubuntu@${module.bastion.box-bastion-public} "}
 
+output "mgmt_bosh_security_group_wide_open" {value = aws_security_group.wide-open.id }
+output "mgmt_bosh_security_group_bosh"      {value = module.sg-mgmt.ocfp_mgmt_bosh_sg_id}
+
 #output "mgmt_configure_bosh_db_rendered_file_contents" {value = coalesce(one(module.mgmt-configure-bosh-db[*].rendered_file_contents), "none") }
 #output "mgmt_configure_bosh_db_rendered_file_location" {value = coalesce(one(module.mgmt-configure-bosh-db[*].rendered_file_location), "none") }
 #
 #output "env_configure_bosh_db_rendered_file_contents" {value = coalesce(one(module.env-configure-bosh-db[*].rendered_file_contents), "none") }
 #output "env_configure_bosh_db_rendered_file_location" {value = coalesce(one(module.env-configure-bosh-db[*].rendered_file_location), "none") }
+
+
+output "subnet_cidr_blocks_0"      { value =  data.aws_subnet.ocfp_subnets_env_infra_cidr_0.cidr_block }
+output "subnet_cidr_blocks_1"      { value =  data.aws_subnet.ocfp_subnets_env_infra_cidr_1.cidr_block }
+output "subnet_cidr_blocks_2"      { value =  data.aws_subnet.ocfp_subnets_env_infra_cidr_2.cidr_block }
+
+
+
+
+
+output "route53_zone_id"     {value = var.route53_zone_id  }
+output "base_domain"         {value = var.base_domain      }
+output "vault_domain"        {value = var.vault_domain     }
+output "system_domain"       {value = var.system_domain    }
+output "apps_domain"         {value = var.apps_domain      }
+output "ssh_domain"          {value = var.ssh_domain       }
+output "blacksmith_domain"   {value = var.blacksmith_domain}
+output "tcp_domain"          {value = var.tcp_domain       }
+output "concourse_domain"    {value = var.concourse_domain }
+output "stratos_domain"      {value = var.stratos_domain   }
+output "system_api_domain"   {value = var.system_api_domain}
+output "shield_domain"       {value = var.shield_domain    }
+
+
+output "shield_web_username" {value = var.shield_web_username}
+output "shield_web_password" {value = random_string.shield-password.result}
